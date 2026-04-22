@@ -1,21 +1,32 @@
 name: Node CI
 
-on: [push]
+on:
+  push:
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup Node
+      # 2. Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # 3. Install dependencies
       - name: Install Dependencies
         run: npm install
 
+      # 4. Run tests
+      - name: Run Tests
+        run: npm test
+
+      # 5. Run app (optional)
       - name: Run App
         run: node index.js
